@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
+import java.util.Timer;
 
 public class UIController {
     private String[] data = {"AUD", "AZN", "GBP", "AMD", "BYN", "BGN", "BRL", "HUF", "HKD", "DKK", "USD", "EUR", "INR",
@@ -31,6 +32,8 @@ public class UIController {
     private FileOperations fileOperations;
     private MainActivity mainActivity;
     private CurrencyAsyncTask currencyAsyncTask;
+    private Timer updateTimer;
+    private UpdateCurrenciesTimerTask updateCurrenciesTimerTask;
 
 
     public UIController() { mainActivity = MainActivity.getInstance(); }
@@ -81,6 +84,13 @@ public class UIController {
             }
         });
         setDateFromFile();
+        updateTimer = new Timer();
+        updateCurrenciesTimerTask = new UpdateCurrenciesTimerTask();
+        updateTimer.schedule(updateCurrenciesTimerTask,1000,3600000);
+
+
+
+
     }
 
     public void onButtonClick(View v) {
